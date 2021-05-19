@@ -17,7 +17,7 @@ class AuthenticationController extends Controller
         $validator = Validator::make($request->all(), $validation->rules(), $validation->messages() );
         
         if($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()]);
+            return response()->json(['errors' => $validator->errors()], 401);
         }
         
         $user = User::create([
@@ -41,7 +41,7 @@ class AuthenticationController extends Controller
             $user = User::where('email', $request->input('email'))->firstOrFail();
             return response()->json($user);
         } else {
-            return response()->json(['error' => ' Mauvais identifiants de connexion !'], 401);
+            return response()->json(['errors' => 'bad_credentials'], 401);
         }
     }
 }
