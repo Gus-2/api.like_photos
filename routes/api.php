@@ -21,7 +21,7 @@ use App\Http\Controllers\AuthenticationController;
 
 Route::post('/register', [AuthenticationController::class, 'register']);
 Route::post('/login', [AuthenticationController::class, 'login']);
-Route::post('/pictures', [PictureController::class, 'store']);
+Route::post('/pictures', [PictureController::class, 'store'])->middleware('App\HttpMiddleware\React');
 
 Route::get('/pictures', function() {
     $pictures = Picture::all();
