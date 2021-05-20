@@ -1,9 +1,11 @@
 <?php
 
+use App\Models\Picture;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\PhotoController;
+use App\Http\Controllers\PictureController;
 use App\Http\Controllers\AuthenticationController;
 
 /*
@@ -19,3 +21,9 @@ use App\Http\Controllers\AuthenticationController;
 
 Route::post('/register', [AuthenticationController::class, 'register']);
 Route::post('/login', [AuthenticationController::class, 'login']);
+Route::post('/pictures', [PictureController::class, 'store']);
+
+Route::get('/pictures', function() {
+    $pictures = Picture::all();
+    return response()->json($pictures);
+});
