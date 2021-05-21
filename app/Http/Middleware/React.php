@@ -27,7 +27,7 @@ class React
         $user = User::where('api_token', $token)->first();
 
         if(!$user) {
-            return response()->json(['message' => 'Invalid Crdentials'], 403);
+            return response()->json(['message' => 'Invalid Credentials'], 403);
         }
 
         Auth::login($user);

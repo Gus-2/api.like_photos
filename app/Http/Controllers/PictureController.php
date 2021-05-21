@@ -4,11 +4,31 @@ namespace App\Http\Controllers;
 
 use App\Models\Picture;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Validation\PicturesValidation;
 
 class PictureController extends Controller
 {
+    public function search(Request $request) {
+        $param = $request->input('search');
+        
+        if($param) {
+            $pictures = Picture::where('title', 'like', '%' . $param . '%')->get();
+        } else {
+            $pictures = Picture::all();
+        }
+        return response()->json($pictures);
+    }
+
+    public function show($id) {
+        $picture = Picture::find($id);
+        if(!$picture) {
+            return response()->json(['message' => 'Resource Not Found'], 403);
+        }
+        return response()->json($picture);
+    }
+
     public function store(Request $request, PicturesValidation $validation) {
 
         $validator = Validator::make($request->all(), $validation->rules(), $validation->messages() );
@@ -25,9 +45,9 @@ class PictureController extends Controller
         $request->file('image')->storeAs('public/pictures', $file);
 
         $picture = Picture::create([
-            'title' => $file,
+            'title' => $request->input('title'),
             'description' => $request->input('description'),
-            'image' => $request->input('description'),
+            'image' => $file,
             'user_id' => Auth::user()->id
         ]);
 

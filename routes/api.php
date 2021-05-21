@@ -18,12 +18,9 @@ use App\Http\Controllers\AuthenticationController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
+Route::get('/pictures/{id}', [PictureController::class, 'show'])->middleware('App\Http\Middleware\React');
+Route::post('/pictures', [PictureController::class, 'search']);
 Route::post('/register', [AuthenticationController::class, 'register']);
 Route::post('/login', [AuthenticationController::class, 'login']);
-Route::post('/pictures', [PictureController::class, 'store'])->middleware('App\HttpMiddleware\React');
+Route::post('/pictures/store', [PictureController::class, 'store'])->middleware('App\Http\Middleware\React');
 
-Route::get('/pictures', function() {
-    $pictures = Picture::all();
-    return response()->json($pictures);
-});
