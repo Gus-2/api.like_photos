@@ -19,8 +19,11 @@ use App\Http\Controllers\AuthenticationController;
 |
 */
 Route::get('/pictures/{id}', [PictureController::class, 'show'])->middleware('App\Http\Middleware\React');
+Route::get('/pictures/{id}/checkLike', [PictureController::class, 'checkLike'])->middleware('App\Http\Middleware\React');
+Route::post('/pictures/store', [PictureController::class, 'store'])->middleware('App\Http\Middleware\React');
 Route::post('/pictures', [PictureController::class, 'search']);
+
 Route::post('/register', [AuthenticationController::class, 'register']);
 Route::post('/login', [AuthenticationController::class, 'login']);
-Route::post('/pictures/store', [PictureController::class, 'store'])->middleware('App\Http\Middleware\React');
+
 

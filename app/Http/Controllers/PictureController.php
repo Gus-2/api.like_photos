@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Like;
 use App\Models\Picture;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -52,5 +53,14 @@ class PictureController extends Controller
         ]);
 
         return response()->json($picture);
+    }
+
+    public function checkLike($id) {
+        $picture = Picture::find($id);
+        if(Auth::user()) {
+            $like = Like::where('picture_id', $picture->id)->where('user_id', Auth::user()->id)->first();
+            if($like) return response()->json(true, 200);
+        }
+        return response()->json(false, 200);
     }
 }

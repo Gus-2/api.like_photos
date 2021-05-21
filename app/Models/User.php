@@ -48,6 +48,6 @@ class User extends Authenticatable
     }
 
     public function liked() {
-        return $this->belongsTo(Picture::class)
+        return $this->belongsTo(Picture::class);
     }
 }
